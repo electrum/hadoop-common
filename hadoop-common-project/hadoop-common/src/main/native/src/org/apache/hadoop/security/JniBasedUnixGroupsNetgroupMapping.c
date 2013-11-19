@@ -73,7 +73,7 @@ Java_org_apache_hadoop_security_JniBasedUnixGroupsNetgroupMapping_getUsersForNet
   // was successful or not (as long as it was called we need to call
   // endnetgrent)
   setnetgrentCalledFlag = 1;
-#ifndef __FreeBSD__
+#if (!defined(__FreeBSD__)) && (!defined(__APPLE__))
   if(setnetgrent(cgroup) == 1) {
 #endif
     current = NULL;
@@ -90,7 +90,7 @@ Java_org_apache_hadoop_security_JniBasedUnixGroupsNetgroupMapping_getUsersForNet
         userListSize++;
       }
     }
-#ifndef __FreeBSD__
+#if (!defined(__FreeBSD__)) && (!defined(__APPLE__))
   }
 #endif
 
