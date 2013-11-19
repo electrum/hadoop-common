@@ -51,13 +51,7 @@ JNIEXPORT void JNICALL Java_org_apache_hadoop_io_compress_snappy_SnappyDecompres
 
   // Load libsnappy.so
 #ifdef UNIX
-  void *libsnappy = dlopen(HADOOP_SNAPPY_LIBRARY, RTLD_LAZY | RTLD_GLOBAL);
-  if (!libsnappy) {
-    char* msg = (char*)malloc(1000);
-    snprintf(msg, 1000, "%s (%s)!", "Cannot load " HADOOP_SNAPPY_LIBRARY, dlerror());
-    THROW(env, "java/lang/UnsatisfiedLinkError", msg);
-    return;
-  }
+  void *libsnappy = RTLD_DEFAULT;
 #endif
 
 #ifdef WINDOWS
