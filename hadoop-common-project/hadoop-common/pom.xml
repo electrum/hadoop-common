@@ -482,6 +482,7 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
+        <bzip2.lib></bzip2.lib>
         <require.bzip2>false</require.bzip2>
         <snappy.prefix></snappy.prefix>
         <snappy.lib></snappy.lib>
@@ -554,7 +555,7 @@
                 <configuration>
                   <target>
                     <exec executable="cmake" dir="${project.build.directory}/native" failonerror="true">
-                      <arg line="${basedir}/src/ -DGENERATED_JAVAH=${project.build.directory}/native/javah -DJVM_ARCH_DATA_MODEL=${sun.arch.data.model} -DREQUIRE_BZIP2=${require.bzip2} -DREQUIRE_SNAPPY=${require.snappy} -DCUSTOM_SNAPPY_PREFIX=${snappy.prefix} -DCUSTOM_SNAPPY_LIB=${snappy.lib} -DCUSTOM_SNAPPY_INCLUDE=${snappy.include}"/>
+                      <arg line="${basedir}/src/ -DGENERATED_JAVAH=${project.build.directory}/native/javah -DJVM_ARCH_DATA_MODEL=${sun.arch.data.model} -DREQUIRE_BZIP2=${require.bzip2} -DBZIP2_LIBRARY_RELEASE=${bzip2.lib} -DREQUIRE_SNAPPY=${require.snappy} -DCUSTOM_SNAPPY_PREFIX=${snappy.prefix} -DCUSTOM_SNAPPY_LIB=${snappy.lib} -DCUSTOM_SNAPPY_INCLUDE=${snappy.include}"/>
                     </exec>
                     <exec executable="make" dir="${project.build.directory}/native" failonerror="true">
                       <arg line="VERBOSE=1"/>
