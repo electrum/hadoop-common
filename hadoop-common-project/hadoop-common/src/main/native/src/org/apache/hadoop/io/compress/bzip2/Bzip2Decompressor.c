@@ -46,12 +46,7 @@ Java_org_apache_hadoop_io_compress_bzip2_Bzip2Decompressor_initIDs(
     if (strcmp(bzlib_name, "system-native") == 0)
       bzlib_name = HADOOP_BZIP2_LIBRARY;
     // Load the native library.
-    void *libbz2 = dlopen(bzlib_name, RTLD_LAZY | RTLD_GLOBAL);
-    if (!libbz2) {
-        THROW(env, "java/lang/UnsatisfiedLinkError",
-              "Cannot load bzip2 native library");
-        return;
-    }
+    void *libbz2 = RTLD_DEFAULT;
 
     // Locate the requisite symbols from libbz2.so.
     dlerror();                                 // Clear any existing error.
