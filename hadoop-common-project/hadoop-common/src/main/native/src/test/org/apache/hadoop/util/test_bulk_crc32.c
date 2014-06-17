@@ -48,8 +48,6 @@ static int testBulkVerifyCrc(int dataLen, int crcType, int bytesPerChecksum)
   sums = calloc(sizeof(uint32_t),
                 (dataLen + bytesPerChecksum - 1) / bytesPerChecksum);
 
-  EXPECT_ZERO(bulk_calculate_crc(data, dataLen, sums, crcType,
-                                 bytesPerChecksum));
   EXPECT_ZERO(bulk_verify_crc(data, dataLen, sums, crcType,
                             bytesPerChecksum, &errorData));
   free(data);

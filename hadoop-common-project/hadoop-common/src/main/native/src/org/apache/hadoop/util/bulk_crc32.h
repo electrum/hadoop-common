@@ -20,10 +20,6 @@
 
 #include <stdint.h>
 
-#ifdef UNIX
-#include <unistd.h> /* for size_t */
-#endif // UNIX
-
 // Constants for different CRC algorithms
 #define CRC32C_POLYNOMIAL 1
 #define CRC32_ZLIB_POLYNOMIAL 2
@@ -40,51 +36,23 @@ typedef struct crc32_error {
   const uint8_t *bad_data; // pointer to start of data chunk with error
 } crc32_error_t;
 
+extern uint32_t update(uint32_t crc, uint8_t *buf, int len, int checksum_type);
 
 /**
  * Verify a buffer of data which is checksummed in chunks
  * of bytes_per_checksum bytes. The checksums are each 32 bits
  * and are stored in sequential indexes of the 'sums' array.
  *
- * @param data                  The data to checksum
- * @param dataLen               Length of the data buffer
- * @param sums                  (out param) buffer to write checksums into.
- *                              It must contain at least dataLen * 4 bytes.
- * @param checksum_type         One of the CRC32 algorithm constants defined 
- *                              above
- * @param bytes_per_checksum    How many bytes of data to process per checksum.
- * @param error_info            If non-NULL, will be filled in if an error
- *                              is detected
+ *  checksum_type - one of the CRC32 constants defined above
+ *  error_info - if non-NULL, will be filled in if an error
+ *               is detected
  *
- * @return                      0 for success, non-zero for an error, result codes
- *                              for which are defined above
+ * Returns: 0 for success, non-zero for an error, result codes
+ *          for which are defined above
  */
 extern int bulk_verify_crc(const uint8_t *data, size_t data_len,
     const uint32_t *sums, int checksum_type,
     int bytes_per_checksum,
     crc32_error_t *error_info);
-
-/**
- * Calculate checksums for some data.
- *
- * The checksums are each 32 bits and are stored in sequential indexes of the
- * 'sums' array.
- *
- * This function is not (yet) optimized.  It is provided for testing purposes
- * only.
- *
- * @param data                  The data to checksum
- * @param dataLen               Length of the data buffer
- * @param sums                  (out param) buffer to write checksums into.
- *                              It must contain at least dataLen * 4 bytes.
- * @param checksum_type         One of the CRC32 algorithm constants defined 
- *                              above
- * @param bytesPerChecksum      How many bytes of data to process per checksum.
- *
- * @return                      0 for success, non-zero for an error
- */
-int bulk_calculate_crc(const uint8_t *data, size_t data_len,
-                    uint32_t *sums, int checksum_type,
-                    int bytes_per_checksum);
 
 #endif

@@ -59,6 +59,8 @@ class NativeCrc32 {
         data, data.position(), data.remaining(),
         fileName, basePos);
   }
+
+  public native int update(int crc, byte[] buf, int offset, int len, int checksumType);
   
     private static native void nativeVerifyChunkedSums(
       int bytesPerSum, int checksumType,
